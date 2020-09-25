@@ -115,11 +115,12 @@ public class Ctl1
         ByteBuffer buffer = ByteBuffer.allocateDirect(message.length);
         buffer.put(message);
         buffer.rewind();
-        int transfered = LibUsb.interruptTransfer(handle, (byte) 81, buffer,
-            IntBuffer.allocate(19), TIMEOUT);
+        IntBuffer transferred = IntBuffer.allocate(19);
+        int transfered = LibUsb.interruptTransfer(handle, (byte) 2, buffer,
+                transferred, TIMEOUT);
         if (transfered < 0)
             throw new LibUsbException("Control transfer failed", transfered);
-        if (transfered != message.length)
+        if (transferred.get() != message.length)
             throw new RuntimeException("Not all data was sent to device");
     }
 
@@ -134,6 +135,7 @@ public class Ctl1
     public static void sendCommand(DeviceHandle handle, int command)
     {
         byte[] message = new byte[64];
+        message[0] = 9;
         message[1] = 9;
         message[2] = (byte) ((command & CMD_RIGHT) > 0 ? 1 : 0);
         message[3] = (byte) ((command & CMD_UP) > 0 ? 1 : 0);
