@@ -144,6 +144,17 @@ public class Ctl1
         message[6] = 8;
         message[7] = 8;
         sendMessage(handle, message);
+
+        ByteBuffer buffer = ByteBuffer.allocateDirect(message.length);
+        IntBuffer transferred = IntBuffer.allocate(19);
+        int transfered = LibUsb.interruptTransfer(handle, (byte) 0x81, buffer,
+                transferred, TIMEOUT);
+        if (transfered < 0)
+            throw new LibUsbException("Control transfer failed", transfered);
+        if (transferred.get() != message.length)
+            throw new RuntimeException("Not all data was sent to device");
+
+        System.out.println(buffer.getInt());
     }
 
     /**
