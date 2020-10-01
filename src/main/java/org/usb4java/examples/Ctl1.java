@@ -135,14 +135,14 @@ public class Ctl1
     public static void sendCommand(DeviceHandle handle, int command)
     {
         byte[] message = new byte[64];
-        message[0] = 9;
-        message[1] = 9;
-        message[2] = (byte) ((command & CMD_RIGHT) > 0 ? 1 : 0);
-        message[3] = (byte) ((command & CMD_UP) > 0 ? 1 : 0);
-        message[4] = (byte) ((command & CMD_DOWN) > 0 ? 1 : 0);
-        message[5] = (byte) ((command & CMD_FIRE) > 0 ? 1 : 0);
-        message[6] = 8;
-        message[7] = 8;
+        message[0] = 0;
+        message[1] = 0;
+        message[2] = 0;
+        message[3] = 1;
+        message[4] = 0;
+        message[5] = 0;
+        message[6] = 0;
+        message[7] = 0;
         sendMessage(handle, message);
 
         ByteBuffer buffer = ByteBuffer.allocateDirect(message.length);
