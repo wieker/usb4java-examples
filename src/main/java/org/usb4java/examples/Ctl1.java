@@ -154,7 +154,8 @@ public class Ctl1
         if (transferred.get() != message.length)
             throw new RuntimeException("Not all data was sent to device");
 
-        System.out.println(buffer.getInt());
+        int aShort = (Byte.toUnsignedInt(buffer.get(1)) << 8) + Byte.toUnsignedInt(buffer.get(0));
+        System.out.println(aShort);
     }
 
     /**
