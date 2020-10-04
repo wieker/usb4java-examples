@@ -33,7 +33,7 @@ public class Ctl1
     private static final short PRODUCT_ID = 0x6666;
 
     /** The USB communication timeout. */
-    private static final int TIMEOUT = 1000;
+    private static final int TIMEOUT = 0;
 
     /** First init packet to send to the missile launcher. */
     private static final byte[] INIT_A = new byte[] { 85, 83, 66, 67, 0, 0, 4,
@@ -135,7 +135,7 @@ public class Ctl1
     public static void sendCommand(DeviceHandle handle, int command)
     {
         byte[] message = new byte[64];
-        message[0] = 0;
+        message[0] = 8;
         message[1] = 0;
         message[2] = 0;
         message[3] = 1;
